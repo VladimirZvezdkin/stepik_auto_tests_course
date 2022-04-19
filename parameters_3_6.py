@@ -27,6 +27,7 @@ class TestPage():
 
     @pytest.mark.parametrize('link',links)
     def test_page(self,browser,link):
+        self.error = ''
         link = f"{link}"
         browser.get(link)
         wait = WebDriverWait(browser,10)
