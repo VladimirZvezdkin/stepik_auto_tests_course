@@ -24,10 +24,11 @@ class TestPage():
              "https://stepik.org/lesson/236903/step/1",
              "https://stepik.org/lesson/236904/step/1",
              "https://stepik.org/lesson/236905/step/1"]
+    error = ''
 
     @pytest.mark.parametrize('link',links)
     def test_page(self,browser,link):
-        self.error = ''
+
         link = f"{link}"
         browser.get(link)
         wait = WebDriverWait(browser,10)
@@ -38,8 +39,12 @@ class TestPage():
         button_submit.click()
         message = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "smart-hints__hint")))
         message_text = message.text
+        if message_text != 'Correct!':
+            self.error += message_text
+            print('\n',self.error)
 
         assert message_text == 'Correct!', 'Test failed! Not correct!'
+
 
 
 
